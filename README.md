@@ -1,5 +1,4 @@
-# calendar_vue
-
+# Calendário de Eventos
 > A Vue.js project
 
 ## Build Setup

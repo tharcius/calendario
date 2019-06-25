@@ -10,9 +10,9 @@
     </div>
     <div class="card margem">
       <div class="card-header">
-        <button class="btn float-left" @click="lastMonth"><i class="material-icons">arrow_back_ios</i></button>
+        <button class="btn float-left" @click="lastMonth"><i class="material-icons">Mês Anterior</i></button>
         <span class="title">{{dateContext.format('MMMM [de] Y')}}</span>
-        <button class="btn float-right" @click="nextMonth"><i class="material-icons">arrow_forward_ios</i></button>
+        <button class="btn float-right" @click="nextMonth"><i class="material-icons">Próximo Mês</i></button>
       </div>
       <div class="row">
         <div class="col-sm dia" v-for="(day, dayIndex) in days" :key="dayIndex">
@@ -21,32 +21,22 @@
       </div>
       <div class="row">
         <template v-for="c in parseInt(firstDayOfMonth.format('d'))">
-          <div class="col-sm dia" :key="c">&nbsp;</div>
+          <div class="col-sm dia" :key="(c+200)">&nbsp;</div>
         </template>
-        <template v-for="day in daysInMonth">
-          <div class="col-sm dia" :key="day">
+        <template v-for="(day, key) in daysInMonth">
+          <div class="col-sm dia" :key="key">
             <div class="card data">
               <div class="card-body">
                 <h5 class="card-title float-right">{{day}}º</h5>
-                <p class="card-text">
-                  <button type="button" class="btn btn-primary btn-sm botao" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Treino de Futebol." v-if="(day%6) == 0">
-                    10:00 - 12:00
-                  </button>
-                  <button type="button" class="btn btn-primary btn-sm botao" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Treino de Ping-Pong." v-if="(day%2) == 0">
-                    09:00 - 11:00
-                  </button>
-                  <button type="button" class="btn btn-primary btn-sm botao" data-container="body" data-toggle="popover" data-trigger="focus" data-placement="top" data-content="Treino de Volei." v-if="(day%5) == 0">
-                    15:00 - 18:00
-                  </button>
-                </p>
+                <p class="card-text">&nbsp;</p>
               </div>
             </div>
           </div>
-          <div class="w-100" v-if="((parseInt(firstDayOfMonth.format('d'))+day)%7) == 0"><span hidden>{{count = 0}}</span></div>
-          <span hidden v-else="">{{count++}}</span>
+          <div class="w-100" v-if="((parseInt(firstDayOfMonth.format('d'))+day)%7) == 0" :key="key"><span hidden>{{count = 0}}</span></div>
+          <span hidden v-else="" :key="key">{{count++}}</span>
         </template>
         <template v-for="c in (7-count)">
-          <div class="col-sm dia" :key="c">&nbsp;</div>
+          <div class="col-sm dia" :key="(c+100)">&nbsp;</div>
         </template>
       </div>
     </div>

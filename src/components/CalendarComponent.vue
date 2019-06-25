@@ -21,22 +21,22 @@
       </div>
       <div class="row">
         <template v-for="c in parseInt(firstDayOfMonth.format('d'))">
-          <div class="col-sm dia" :key="(c+200)">&nbsp;</div>
+          <div class="col-sm dia">&nbsp;<span hidden>{{c}}</span></div>
         </template>
+
         <template v-for="(day, key) in daysInMonth">
           <div class="col-sm dia" :key="key">
             <div class="card data">
               <div class="card-body">
                 <h5 class="card-title float-right">{{day}}º</h5>
-                <p class="card-text">&nbsp;</p>
+                <p class="card-text">&nbsp;{{isSaturday(day)}} <br> {{diaDaSemana(day)}}</p>
               </div>
             </div>
           </div>
-          <div class="w-100" v-if="((parseInt(firstDayOfMonth.format('d'))+day)%7) == 0" :key="key"><span hidden>{{count = 0}}</span></div>
-          <span hidden v-else="" :key="key">{{count++}}</span>
+          <div class="w-100" v-if="isSaturday(day)"><span hidden>{{count = 0}}</span></div>
         </template>
         <template v-for="c in (7-count)">
-          <div class="col-sm dia" :key="(c+100)">&nbsp;</div>
+          <div class="col-sm dia">&nbsp;<span hidden>{{c}}</span></div>
         </template>
       </div>
     </div>
@@ -44,20 +44,7 @@
 </template>
 
 <script>
-import moment from 'moment'
-moment.locale('pt-br', {
-  weekdays: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-  weekdaysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qin', 'Sex', 'Sáb'],
-  monthsShort: ['Jan', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-  months: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-  longDateFormat: {
-    LT: 'HH:mm',
-    LTS: 'HH:mm:ss',
-    L: 'DD/MM/YYYY',
-    LL: 'D MMMM YYYY',
-    LLL: 'D MMMM YYYY HH:mm',
-    LLLL: 'dddd D MMMM YYYY HH:mm'
-  }})
+moment.locale('pt-br')
 export default {
   name: 'CalendarComponent',
   data () {
@@ -74,6 +61,21 @@ export default {
     },
     lastMonth () {
       this.dateContext = this.subtractMonth
+    },
+    isSaturday (day) {
+      let month = this.dateContext.format('MM')
+      let year = this.dateContext.format('YYYY')
+      let dia = `${year}-${month}-${parseInt(day)}`
+      if (parseInt(moment(dia).format('d')) == 6) {
+        return true
+      }
+      return false
+    },
+    diaDaSemana (day) {
+      let month = this.dateContext.format('MM')
+      let year = this.dateContext.format('YYYY')
+      let dia = `${year}-${month}-${parseInt(day)}`
+      return moment(dia).format('dd DD-MM-YYYY')
     }
   },
   computed: {

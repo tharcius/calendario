@@ -1,16 +1,20 @@
 {
   "name": "calendar_vue",
-  "version": "1.0.0",
   "description": "A Vue.js project",
+  "version": "1.0.0",
   "author": "Tharcius Vinicius <tharciussilva@gmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
-    "start": "npm run dev",
-    "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tharcius/calendario"
+  },
+  "main": "dist/index.js",
   "dependencies": {
+    "moment": "^2.24.0",
     "vue": "^2.5.2"
   },
   "devDependencies": {

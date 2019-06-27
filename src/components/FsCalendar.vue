@@ -35,7 +35,7 @@
           </div>
           <div class="w-100" v-if="isSaturday(day)"><span hidden>{{count = 0}}</span></div>
         </template>
-        <template v-for="c in (7-count)">
+        <template v-for="c in (lastDay)">
           <div class="col-sm dia">&nbsp;<span hidden>{{c}}</span></div>
         </template>
       </div>
@@ -44,9 +44,10 @@
 </template>
 
 <script>
+import moment from 'moment'
 moment.locale('pt-br')
 export default {
-  name: 'CalendarComponent',
+  name: 'FsCalendar',
   data () {
     return {
       dateContext: moment(),
@@ -62,14 +63,8 @@ export default {
     lastMonth () {
       this.dateContext = this.subtractMonth
     },
-    isSaturday (day) {
-      let month = this.dateContext.format('MM')
-      let year = this.dateContext.format('YYYY')
-      let dia = `${year}-${month}-${parseInt(day)}`
-      if (parseInt(moment(dia).format('d')) == 6) {
-        return true
-      }
-      return false
+    isSaturday: function (day) {
+      return (parseInt(this.firstDayOfMonth.format('d')) + parseInt(day)) % 7 === 0
     },
     diaDaSemana (day) {
       let month = this.dateContext.format('MM')
@@ -109,6 +104,10 @@ export default {
     },
     subtractMonth: function () {
       return moment(this.dateContext).subtract(1, 'month')
+    },
+    lastDay: function () {
+      let day = `${this.dateContext.format('YYYY-MM')}-${this.dateContext.daysInMonth()}`
+      return 6 - moment(day).format('d')
     }
   }
 }

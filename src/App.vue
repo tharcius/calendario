@@ -1,16 +1,16 @@
 <template>
   <div id="app">
-    <calendar-component/>
+    <fs-calendar/>
   </div>
 </template>
 
 <script>
-import CalendarComponent from './components/CalendarComponent'
+import FsCalendar from './components/FsCalendar'
 
 export default {
   name: 'App',
   components: {
-    CalendarComponent
+    FsCalendar
   }
 }
 </script>
